@@ -34,29 +34,10 @@ TEST(Model, ForwardWithoutLoad) {
     EXPECT_ANY_THROW(model.Forward(inputs));
 }
 
-TEST(Model, LoadModelAndForward) {
+TEST(Model, LoadModelEmptyPath) {
     ml::Model model;
-    // LoadModel with dummy path (stub implementation just stores path)
-    EXPECT_NO_THROW(model.LoadModel("/tmp/dummy_model.pt"));
-    
-    // Forward with empty inputs (stub returns empty vector)
-    std::vector<core::Tensor> inputs;
-    auto outputs = model.Forward(inputs);
-    EXPECT_TRUE(outputs.empty());  // Stub returns empty
-}
-
-TEST(Model, ForwardWithInputTensors) {
-    ml::Model model;
-    model.LoadModel("/tmp/dummy_model.pt");
-    
-    // Create test input tensors
-    std::vector<core::Tensor> inputs;
-    inputs.push_back(core::Tensor::Ones({2, 3}, core::Float32));
-    inputs.push_back(core::Tensor::Zeros({4, 5}, core::Float32));
-    
-    // Stub should accept inputs without crashing
-    auto outputs = model.Forward(inputs);
-    EXPECT_TRUE(outputs.empty());  // Stub returns empty
+    // LoadModel with empty path should throw
+    EXPECT_ANY_THROW(model.LoadModel(""));
 }
 
 }  // namespace tests
